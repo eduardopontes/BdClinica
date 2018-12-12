@@ -15,6 +15,7 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public Main() {
+        ConexaoBdClinica.connect();
         initComponents();
     }
 
