@@ -219,13 +219,17 @@ public class CadastroPaciente extends javax.swing.JFrame{
 
     private void botaoAtualizarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarMedicoActionPerformed
         try {
-            comboMedico.removeAllItems();
-            comboMedico.addItem(null);
             String espec = comboEspec.getSelectedItem().toString();
             String query = "SELECT M.nome FROM medico M, exerce as EX, especialidade as ESP WHERE M.crm = EX.crm AND EX.codigoespec = ESP.codigo AND ESP.nome = '" + espec + "'";
             ResultSet result = ConexaoBdClinica.stmt.executeQuery(query);
+            comboMedico.removeAllItems();
+            comboMedico.addItem("Sem Preferência");
             while(result.next()){
                 comboMedico.addItem(result.getString("nome"));
+            }
+            if(comboMedico.getItemCount() == 1){
+                comboMedico.removeAllItems();
+                comboMedico.addItem("Não há médicos disponíveis para a especialidade.");
             }
         } catch (SQLException ex) {
             Logger.getLogger(CadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
