@@ -3,6 +3,8 @@ import java.awt.event.ItemEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,14 +26,6 @@ public class PrimeiroCadastroPaciente extends javax.swing.JFrame{
      */
     public PrimeiroCadastroPaciente() {
         initComponents();
-        try {
-            ResultSet result = ConexaoBdClinica.stmt.executeQuery("SELECT nome FROM especialidade");
-            while(result.next()){
-                comboEspec.addItem(result.getString("nome"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PrimeiroCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**
@@ -47,13 +41,8 @@ public class PrimeiroCadastroPaciente extends javax.swing.JFrame{
         jLabel1 = new javax.swing.JLabel();
         caixaTel = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        comboEspec = new javax.swing.JComboBox<>();
-        comboMedico = new javax.swing.JComboBox<>();
-        botaoAtualizarMedico = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 400));
@@ -69,47 +58,14 @@ public class PrimeiroCadastroPaciente extends javax.swing.JFrame{
 
         jLabel2.setText("Telefone*");
 
-        jLabel3.setText("Especialidade*");
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Primeiro Cadastro");
-
-        jLabel5.setText("Médico de Preferência");
 
         jButton1.setText("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        comboEspec.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboEspecItemStateChanged(evt);
-            }
-        });
-        comboEspec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboEspecActionPerformed(evt);
-            }
-        });
-
-        comboMedico.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                comboMedicoMouseClicked(evt);
-            }
-        });
-        comboMedico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboMedicoActionPerformed(evt);
-            }
-        });
-
-        botaoAtualizarMedico.setText("Atualizar Medicos");
-        botaoAtualizarMedico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAtualizarMedicoActionPerformed(evt);
             }
         });
 
@@ -124,27 +80,18 @@ public class PrimeiroCadastroPaciente extends javax.swing.JFrame{
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(70, 70, 70))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(117, 117, 117)
-                                .addComponent(jButton1)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel5))
-                                .addGap(32, 32, 32)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(caixaTel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(caixaNome)
-                                    .addComponent(comboEspec, 0, 243, Short.MAX_VALUE)
-                                    .addComponent(comboMedico, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(botaoAtualizarMedico)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(90, 90, 90)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(caixaTel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                            .addComponent(caixaNome))
                         .addGap(25, 25, 25))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(163, 163, 163)
+                .addComponent(jButton1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,19 +106,9 @@ public class PrimeiroCadastroPaciente extends javax.swing.JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(caixaTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(comboEspec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(comboMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoAtualizarMedico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGap(45, 45, 45)
                 .addComponent(jButton1)
-                .addGap(21, 21, 21))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -187,45 +124,13 @@ public class PrimeiroCadastroPaciente extends javax.swing.JFrame{
             String tel = caixaTel.getText();
             String query = "INSERT INTO Paciente (Nome, Telefone) VALUES ('" + nome + "', " + tel + ")";
             ConexaoBdClinica.stmt.execute(query);
+            MarcaConsulta mc = new MarcaConsulta(nome, tel);
+            mc.setVisible(true);
+            this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(PrimeiroCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void comboEspecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEspecActionPerformed
-        
-    }//GEN-LAST:event_comboEspecActionPerformed
-
-    private void comboMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMedicoActionPerformed
-        
-    }//GEN-LAST:event_comboMedicoActionPerformed
-
-    private void comboMedicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboMedicoMouseClicked
-        
-    }//GEN-LAST:event_comboMedicoMouseClicked
-
-    private void comboEspecItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboEspecItemStateChanged
-        
-    }//GEN-LAST:event_comboEspecItemStateChanged
-
-    private void botaoAtualizarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarMedicoActionPerformed
-        try {
-            String espec = comboEspec.getSelectedItem().toString();
-            String query = "SELECT M.nome FROM medico M, exerce as EX, especialidade as ESP WHERE M.crm = EX.crm AND EX.codigoespec = ESP.codigo AND ESP.nome = '" + espec + "'";
-            ResultSet result = ConexaoBdClinica.stmt.executeQuery(query);
-            comboMedico.removeAllItems();
-            comboMedico.addItem("Sem Preferência");
-            while(result.next()){
-                comboMedico.addItem(result.getString("nome"));
-            }
-            if(comboMedico.getItemCount() == 1){
-                comboMedico.removeAllItems();
-                comboMedico.addItem("Não há médicos disponíveis para a especialidade.");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PrimeiroCadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_botaoAtualizarMedicoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,16 +171,11 @@ public class PrimeiroCadastroPaciente extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoAtualizarMedico;
     private javax.swing.JTextField caixaNome;
     private javax.swing.JTextField caixaTel;
-    private javax.swing.JComboBox<String> comboEspec;
-    private javax.swing.JComboBox<String> comboMedico;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }
