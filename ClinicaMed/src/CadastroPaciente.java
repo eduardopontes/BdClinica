@@ -193,16 +193,7 @@ public class CadastroPaciente extends javax.swing.JFrame{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void comboEspecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEspecActionPerformed
-//        try {
-//            String espec = comboEspec.getSelectedItem().toString();
-//            String query = "SELECT M.nome FROM medico M, exerce as EX, especialidade as ESP WHERE M.crm = EX.crm AND EX.codigoespec = ESP.codigo AND ESP.nome = '" + espec + "'";
-//            ResultSet result = ConexaoBdClinica.stmt.executeQuery(query);
-//            while(result.next()){
-//                comboMedico.addItem(result.getString("nome"));
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        
     }//GEN-LAST:event_comboEspecActionPerformed
 
     private void comboMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMedicoActionPerformed
